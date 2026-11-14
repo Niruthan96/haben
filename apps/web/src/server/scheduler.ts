@@ -7,6 +7,7 @@ import { runDueExchangeRates } from "./modules/stammdaten/index.ts";
 import { runDueFristenMails, runDuePruefwertMail } from "./modules/mail/index.ts";
 import { runDuePostfachFetch } from "./modules/finanzamt/index.ts";
 import { applyPublishedRatesToDrafts, runDueBaseRate, runDueRecurring } from "./modules/rechnungen/index.ts";
+import { runDueEtsySyncs } from "./modules/etsy/index.ts";
 import { runDueStoreSyncs } from "./modules/stores/index.ts";
 import { today } from "./today.ts";
 
@@ -47,6 +48,13 @@ export async function runScheduledJobs(): Promise<void> {
     for (const error of result.errors) console.warn(error);
   } catch (error) {
     console.error("Store-Finanzberichte", error);
+  }
+  try {
+    const result = await runDueEtsySyncs();
+    if (result.added > 0) console.log(`Etsy Payments: ${result.added} neue Umsätze aus dem Zahlungsverlauf`);
+    for (const error of result.errors) console.warn(error);
+  } catch (error) {
+    console.error("Etsy Payments", error);
   }
   try {
     if (elsterMode() === "eric") {

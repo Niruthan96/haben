@@ -17,6 +17,7 @@ import { BackupCard } from "../../components/BackupCard.tsx";
 import { BaseRateLookup } from "../../components/BaseRateLookup.tsx";
 import { DatevCard } from "../../components/DatevCard.tsx";
 import { EnableBankingCard } from "../../components/EnableBankingCard.tsx";
+import { EtsyPaymentsCard } from "../../components/EtsyPaymentsCard.tsx";
 import { StoreReportsCard } from "../../components/StoreReportsCard.tsx";
 import { ExchangeRatesCard } from "../../components/ExchangeRatesCard.tsx";
 import { FilePicker } from "../../components/FilePicker.tsx";
@@ -51,6 +52,7 @@ import { useAction } from "../../lib/use-action.ts";
 import { getBackupStatus } from "../../server/functions/backup.ts";
 import { getEnableBankingSettings } from "../../server/functions/bank.ts";
 import { getStoreConnections } from "../../server/functions/stores.ts";
+import { getEtsySettings } from "../../server/functions/etsy.ts";
 import { removeCertificate, uploadCertificate } from "../../server/functions/certificate.ts";
 import { RELIGIONEN } from "../../lib/religion.ts";
 import { SETTINGS_AREAS, settingsAreas, type SettingsArea } from "../../lib/settings-areas.ts";
@@ -104,6 +106,7 @@ export const Route = createFileRoute("/_app/einstellungen")({
       rates,
       enableBanking,
       stores,
+      etsy,
       customPages,
       zugaenge,
       extraction,
@@ -129,6 +132,7 @@ export const Route = createFileRoute("/_app/einstellungen")({
       getExchangeRates(),
       getEnableBankingSettings(),
       getStoreConnections(),
+      getEtsySettings(),
       getCustomPages(),
       getZugaenge(),
       getExtractionSettings(),
@@ -157,6 +161,7 @@ export const Route = createFileRoute("/_app/einstellungen")({
       rates,
       enableBanking,
       stores,
+      etsy,
       customPages,
       zugaenge,
       extraction,
@@ -191,6 +196,7 @@ function SettingsPage() {
     rates,
     enableBanking,
     stores,
+    etsy,
     customPages,
     zugaenge,
     extraction,
@@ -270,6 +276,7 @@ function SettingsPage() {
             <>
               <EnableBankingCard data={enableBanking} />
               <StoreReportsCard connections={stores.connections} contacts={stores.contacts} />
+              <EtsyPaymentsCard data={etsy} />
             </>
           )}
           {bereich === "zugaenge" && zugaenge.mode === "sso" && <SsoZugaengeCard accounts={zugaenge.ssoAccounts} providerName={oidc.name} />}
