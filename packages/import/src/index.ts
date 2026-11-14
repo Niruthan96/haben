@@ -25,4 +25,6 @@ export * from "./accountable/index.ts";
 export * from "./enablebanking/index.ts";
 export * from "./stores/index.ts";
 export * from "./csv-import/index.ts";
+export * from "./etsy-ledger.ts";
+export * from "./etsy-api.ts";
 export * from "./buchhaltungsbutler/index.ts";
